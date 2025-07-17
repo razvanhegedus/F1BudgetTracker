@@ -15,6 +15,18 @@ public class CapBudget implements IBudget {
         total = 0;
     }
 
+    public double getCap() {
+        return cap;
+    }
+
+    public double getTotal() {
+        return total;
+    }
+
+    public void setTotal(double total) {
+        this.total = total;
+    }
+
     @Override
     public void addExpense(Expense expense) {
         if(expense.getAmount() + total <= cap && expense.getType().equals(ExpenseType.BUDGET_CAP)) {
