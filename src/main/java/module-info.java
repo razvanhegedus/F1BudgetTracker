@@ -1,4 +1,4 @@
-module com.expensetracker.f1expensetracker {
+ module com.expensetracker.f1expensetracker {
     requires javafx.controls;
     requires javafx.fxml;
     requires javafx.web;
@@ -8,7 +8,8 @@ module com.expensetracker.f1expensetracker {
     requires net.synedra.validatorfx;
     requires org.kordamp.bootstrapfx.core;
     requires eu.hansolo.tilesfx;
+     requires jdk.unsupported;
 
-    opens com.expensetracker.f1expensetracker to javafx.fxml;
+     opens com.expensetracker.f1expensetracker to javafx.fxml;
     exports com.expensetracker.f1expensetracker;
 }
