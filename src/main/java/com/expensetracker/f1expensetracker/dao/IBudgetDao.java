@@ -6,7 +6,7 @@ import com.expensetracker.f1expensetracker.model.IBudget;
 import java.sql.SQLException;
 import java.util.List;
 
-public class IBudgetDao {
+interface IBudgetDao {
     public interface BudgetDAO {
         // CRUD Operations
         void addBudget(IBudget budget) throws SQLException;

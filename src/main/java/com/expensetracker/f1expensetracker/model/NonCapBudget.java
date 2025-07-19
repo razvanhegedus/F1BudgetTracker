@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class NonCapBudget implements IBudget {
-    private List<Expense> excludedSalaries;//2drivers, top three best paid workers
+    private final List<Expense> excludedSalaries;//2drivers, top three best paid workers
     private double value;
 
     public double getValue() {
@@ -25,7 +25,7 @@ public class NonCapBudget implements IBudget {
         if(excludedSalaries.size() >= 5){
             throw new IllegalArgumentException("Can't add more than 5 excluded salaries.");
         }
-        if(expense.getType().equals(ExpenseType.BUDGET_CAP)) {
+        if(expense.getType().equals(ExpenseType.BUDGET_CAP) || expense.isIncludedInBudgetCap()) {
             throw new IllegalArgumentException("Can t add an capped expense to NonCapBudget");
         }
         excludedSalaries.add(expense);

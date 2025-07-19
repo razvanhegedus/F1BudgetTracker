@@ -8,13 +8,15 @@ public class Expense {
     private double amount;
     private LocalDate date;
     private ExpenseType type;
+    private ExpenseCategory category;
 
-    public Expense(int id, String description, double amount, LocalDate date, ExpenseType type) {
+    public Expense(int id, String description, double amount, LocalDate date, ExpenseType type, ExpenseCategory category) {
         this.id = id;
         this.description = description;
         this.amount = amount;
         this.date = date;
         this.type = type;
+        this.category = category;
     }
 
     public int getId() {
@@ -55,5 +57,18 @@ public class Expense {
 
     public void setType(ExpenseType type) {
         this.type = type;
+    }
+
+    public ExpenseCategory getCategory() {
+        return category;
+    }
+
+    public void setCategory(ExpenseCategory category) {
+        this.category = category;
+    }
+
+    public boolean isIncludedInBudgetCap() {
+        return category != ExpenseCategory.DRIVER_SALARY &&
+                category != ExpenseCategory.EXCLUDED_STAFF_SALARY;
     }
 }

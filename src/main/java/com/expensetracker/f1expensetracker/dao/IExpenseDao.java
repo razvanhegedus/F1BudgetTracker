@@ -1,6 +1,7 @@
 package com.expensetracker.f1expensetracker.dao;
 
 import com.expensetracker.f1expensetracker.model.Expense;
+import com.expensetracker.f1expensetracker.model.ExpenseCategory;
 
 import java.sql.SQLException;
 import java.time.LocalDate;
@@ -15,7 +16,7 @@ public interface IExpenseDao {
     void deleteExpense(int id) throws SQLException;
 
     // Business Logic
-    List<Expense> getExpensesByCategory(int budgetId, String category) throws SQLException;
+    List<Expense> getExpensesByCategory(int budgetId, ExpenseCategory category) throws SQLException;
     List<Expense> getExpensesByDateRange(int budgetId, LocalDate start, LocalDate end) throws SQLException;
     double getTotalExpensesForBudget(int budgetId) throws SQLException;
 }

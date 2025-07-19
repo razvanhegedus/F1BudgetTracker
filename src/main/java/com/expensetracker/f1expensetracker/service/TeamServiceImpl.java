@@ -48,12 +48,14 @@ public class TeamServiceImpl implements ITeamService {
         }
 
         try {
-            if (expense.getType() == ExpenseType.BUDGET_CAP) {
+            if (expense.getType() == ExpenseType.BUDGET_CAP && expense.isIncludedInBudgetCap()) {
                 team.getCapBudget().addExpense(expense);
                 System.out.println("Cap expense added successfully");
-            } else if (expense.getType() == ExpenseType.NON_CAP) {
+            } else if (expense.getType() == ExpenseType.NON_CAP && !expense.isIncludedInBudgetCap()) {
                 team.getNonCappedBudget().addExpense(expense);
                 System.out.println("Non-cap expense added successfully");
+            } else{
+                System.out.println("Can't add this expense");
             }
         } catch (IllegalArgumentException e) {
             System.out.println("Failed to add expense: " + e.getMessage());

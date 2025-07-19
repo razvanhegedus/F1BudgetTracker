@@ -11,9 +11,8 @@ public interface ITeamDao {
     Team getTeamById(int id) throws SQLException;
     Team getTeamByEmail(String email) throws SQLException; // For login/validation
     void updateTeam(Team team) throws SQLException;
-    void deleteTeam(int id) throws SQLException; // Cascades to budgets/expenses
+    void deleteTeam(int id) throws SQLException;
 
     // Business Logic
-    boolean emailExists(String email) throws SQLException; // Check uniqueness
     boolean validateCredentials(String email, String password) throws SQLException;
 }
