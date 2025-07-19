@@ -1,5 +1,6 @@
 package com.expensetracker.f1expensetracker;
 
+import com.expensetracker.f1expensetracker.util.DBInitializer;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -15,6 +16,8 @@ public class HelloApplication extends Application {
         stage.setTitle("Hello!");
         stage.setScene(scene);
         stage.show();
+        DBInitializer.initialiseDataBase();
+
     }
 
     public static void main(String[] args) {
