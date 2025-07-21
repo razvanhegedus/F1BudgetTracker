@@ -4,8 +4,16 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class NonCapBudget implements IBudget {
+    private int id;
     private final List<Expense> excludedSalaries;//2drivers, top three best paid workers
     private double value;
+
+
+    public NonCapBudget(int id) {
+        excludedSalaries = new ArrayList<>(5);
+        value = 0;
+        this.id = id;
+    }
 
     public double getValue() {
         return value;
@@ -13,11 +21,6 @@ public class NonCapBudget implements IBudget {
 
     public void setValue(double value) {
         this.value = value;
-    }
-
-    public NonCapBudget() {
-        excludedSalaries = new ArrayList<>(5);
-        value = 0;
     }
 
     @Override
@@ -40,5 +43,10 @@ public class NonCapBudget implements IBudget {
     @Override
     public List<Expense> getExpenses() {
         return excludedSalaries;
+    }
+
+    @Override
+    public void setid(int id) {
+        this.id = id;
     }
 }

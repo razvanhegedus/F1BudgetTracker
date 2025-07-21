@@ -1,14 +1,21 @@
 package com.expensetracker.f1expensetracker.service;
 
+import com.expensetracker.f1expensetracker.dao.ITeamDao;
 import com.expensetracker.f1expensetracker.model.Expense;
 import com.expensetracker.f1expensetracker.model.*;
 import com.expensetracker.f1expensetracker.util.PasswordUtils;
 
+import java.sql.SQLException;
 import java.util.*;
 
 
 public class TeamServiceImpl implements ITeamService {
     private final Map<String, Team> emailToTeam = new HashMap<>();
+    private final ITeamDao teamDao;
+
+    public TeamServiceImpl(ITeamDao teamDao) {
+        this.teamDao = teamDao;
+    }
 
     @Override
     public boolean registerTeam(Team team) {
@@ -27,28 +34,36 @@ public class TeamServiceImpl implements ITeamService {
             return false;
         }
 
-        if (emailToTeam.containsKey(team.getEmail())) {
-            System.out.println("Email already registered");
+        try {
+            if (teamDao.getTeamByEmail(team.getEmail()) != null) {
+                System.out.println("Email already registered");
+                return false;
+            }
+
+            // Hash password before storing
+            String hashed = PasswordUtils.hashPassword(team.getRawPassword());
+            team.setHashedPassword(hashed);
+
+            teamDao.addTeam(team);
+            return true;
+
+        } catch (SQLException e) {
+            System.out.println("Registration failed: " + e.getMessage());
             return false;
         }
-
-        // Hash password before storing
-        String hashed = PasswordUtils.hashPassword(team.getRawPassword());
-        team.setHashedPassword(hashed);
-
-        emailToTeam.put(team.getEmail(), team);
-        return true;
     }
 
 
     @Override
     public Team login(String email, String password) {
-        Team team = emailToTeam.get(email);
-
-        if (team != null && PasswordUtils.verifyPassword(password, team.getRawPassword())) {
-            return team;
+        try {
+            Team team = teamDao.getTeamByEmail(email);
+            if (team != null && PasswordUtils.verifyPassword(password, team.getRawPassword())) {
+                return team;
+            }
+        } catch (SQLException e) {
+            System.out.println("Login error: " + e.getMessage());
         }
-
         return null;
     }
 

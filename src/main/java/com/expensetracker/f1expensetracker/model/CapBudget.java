@@ -5,11 +5,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class CapBudget implements IBudget {
+    private int id; //budgetID
     private List<Expense> expenses;
     private final double cap;
     private double total;
 
-    public CapBudget() {
+    public CapBudget(int id) {
+        this.id = id;
         expenses = new ArrayList<Expense>();
         cap = 13500000;
         total = 0;
@@ -54,5 +56,10 @@ public class CapBudget implements IBudget {
     @Override
     public List<Expense> getExpenses() {
         return expenses;
+    }
+
+    @Override
+    public void setid(int id) {
+        this.id = id;
     }
 }
