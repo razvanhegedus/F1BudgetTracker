@@ -50,6 +50,8 @@ dependencies {
     implementation("org.xerial:sqlite-jdbc:3.45.2.0")
     testImplementation("org.junit.jupiter:junit-jupiter-api:${junitVersion}")
     testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:${junitVersion}")
+    implementation("org.mindrot:jbcrypt:0.4")
+
 }
 
 tasks.withType<Test> {

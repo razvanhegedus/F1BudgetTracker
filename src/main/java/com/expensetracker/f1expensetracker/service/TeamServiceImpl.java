@@ -2,6 +2,7 @@ package com.expensetracker.f1expensetracker.service;
 
 import com.expensetracker.f1expensetracker.model.Expense;
 import com.expensetracker.f1expensetracker.model.*;
+import com.expensetracker.f1expensetracker.util.PasswordUtils;
 
 import java.util.*;
 
@@ -31,15 +32,26 @@ public class TeamServiceImpl implements ITeamService {
             return false;
         }
 
+        // Hash password before storing
+        String hashed = PasswordUtils.hashPassword(team.getRawPassword());
+        team.setHashedPassword(hashed);
+
         emailToTeam.put(team.getEmail(), team);
         return true;
     }
 
+
     @Override
     public Team login(String email, String password) {
         Team team = emailToTeam.get(email);
-        return (team != null && team.getPassword().equals(password)) ? team : null;
+
+        if (team != null && PasswordUtils.verifyPassword(password, team.getRawPassword())) {
+            return team;
+        }
+
+        return null;
     }
+
 
     @Override
     public void addExpense(Team team, Expense expense) {

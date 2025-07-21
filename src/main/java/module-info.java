@@ -10,6 +10,7 @@
     requires eu.hansolo.tilesfx;
      requires jdk.unsupported;
      requires java.sql;
+     requires jbcrypt;
 
      opens com.expensetracker.f1expensetracker to javafx.fxml;
     exports com.expensetracker.f1expensetracker;

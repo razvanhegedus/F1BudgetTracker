@@ -7,16 +7,22 @@ public class Team {
     private int id;
     private String name;
     private String email;
-    private String password;
-    private List<Expense> expenses;
-    private IBudget capBudget;
-    private IBudget nonCappedBudget;
 
-    public Team(int id, String name, String email, String password, IBudget capBudget, IBudget nonCappedBudget) {
+    // Store only the hashed password long-term
+    private String hashedPassword;
+
+    // Used temporarily for validation or registration
+    private transient String rawPassword;
+
+    private final List<Expense> expenses;
+    private final IBudget capBudget;
+    private final IBudget nonCappedBudget;
+
+    public Team(int id, String name, String email, String rawPassword, IBudget capBudget, IBudget nonCappedBudget) {
         this.id = id;
         this.name = name;
         this.email = email;
-        this.password = password;
+        this.rawPassword = rawPassword;
         this.capBudget = capBudget;
         this.nonCappedBudget = nonCappedBudget;
         this.expenses = capBudget.getExpenses();
@@ -47,12 +53,20 @@ public class Team {
         this.email = email;
     }
 
-    public String getPassword() {
-        return password;
+    public String getRawPassword() {
+        return rawPassword;
     }
 
-    public void setPassword(String password) {
-        this.password = password;
+    public void setRawPassword(String rawPassword) {
+        this.rawPassword = rawPassword;
+    }
+
+    public String getHashedPassword() {
+        return hashedPassword;
+    }
+
+    public void setHashedPassword(String hashedPassword) {
+        this.hashedPassword = hashedPassword;
     }
 
     public List<Expense> getExpenses() {
@@ -68,19 +82,15 @@ public class Team {
     }
 
     public boolean isValidEmail() {
-
         String emailRegex = "^[a-zA-Z0-9_+&*-]+(?:\\.[a-zA-Z0-9_+&*-]+)*@" +
                 "(?:[a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,7}$";
         Pattern p = Pattern.compile(emailRegex);
-
         return this.email != null && p.matcher(this.email).matches();
     }
 
     public boolean isValidPassword() {
+        if (this.rawPassword == null) return false;
         String regex = "^(?=.*[A-Z])(?=.*\\d)(?=.*[^a-zA-Z0-9]).{7,}$";
-        Pattern p = Pattern.compile(regex);
-
-        return this.password != null && p.matcher(this.password).matches();
+        return Pattern.compile(regex).matcher(this.rawPassword).matches();
     }
-    
 }

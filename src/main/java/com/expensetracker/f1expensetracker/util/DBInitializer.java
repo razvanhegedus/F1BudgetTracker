@@ -36,6 +36,7 @@ public class DBInitializer {
                     "amount REAL NOT NULL CHECK(amount >= 0)," +
                     "description TEXT," +
                     "expense_date TEXT NOT NULL," +
+                    "budget_type TEXT NOT NULL, " +
                     "category TEXT," +
                     "FOREIGN KEY (budget_id) REFERENCES budgets(id) ON DELETE CASCADE" +
                     ");";
