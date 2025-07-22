@@ -1,4 +1,4 @@
-package com.expensetracker.f1expensetracker;
+package com.expensetracker.f1expensetracker.ui;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
